@@ -18,7 +18,7 @@ spec:
         app: cloakbrowser
     spec:
       containers:
-        - image: huyduongdn/cloakbrowser-manager-k8s:2
+        - image: huyduongdn/cloakbrowser-manager-k8s:8
           name: cloakbrowser
           volumeMounts:
             - name: data-volume
