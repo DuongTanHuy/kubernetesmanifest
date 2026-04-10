@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: cloakbrowser
+  name: cloakbrowser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloakbrowser
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: cloakbrowser
+    spec:
+      containers:
+        - image: huyduongdn/cloakbrowser-manager-k8s:latest
+          name: cloakbrowser
+          volumeMounts:
+            - name: data-volume
+              mountPath: /data
+          resources: {}
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: cloakbrowser-pvc
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-service
+  labels:
+    app: lb-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: cloakbrowser
